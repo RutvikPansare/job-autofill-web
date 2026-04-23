@@ -56,10 +56,11 @@ export function useAuth(): UseAuthReturn {
           loading: false,
         });
 
-        // After OAuth callback, push to the page they signed in from
+        // After OAuth callback, go to the page saved before leaving for Google
         if (event === "SIGNED_IN" && session) {
-          const path = typeof window !== "undefined" ? window.location.pathname : "/";
-          router.push(path === "/" ? "/profile" : path);
+          const destination = sessionStorage.getItem("jf_auth_return") || "/profile";
+          sessionStorage.removeItem("jf_auth_return");
+          router.push(destination);
         }
       }
     );
@@ -78,15 +79,17 @@ export function useAuth(): UseAuthReturn {
     const supabase = getSupabaseClient();
     setIsSigningIn(true);
     try {
+      // Save where to go after auth — sessionStorage survives the OAuth redirect
       const currentPath = typeof window !== "undefined" ? window.location.pathname : "/";
       const destination = currentPath === "/" ? "/profile" : currentPath;
-      const redirectTo = typeof window !== "undefined"
-        ? window.location.origin + destination
-        : undefined;
+      if (typeof window !== "undefined") {
+        sessionStorage.setItem("jf_auth_return", destination);
+      }
+
       const { error } = await supabase.auth.signInWithOAuth({
         provider: "google",
-        options:  { 
-          redirectTo,
+        options:  {
+          redirectTo: typeof window !== "undefined" ? window.location.origin : undefined,
           scopes: "https://www.googleapis.com/auth/drive.readonly https://www.googleapis.com/auth/spreadsheets"
         },
       });
