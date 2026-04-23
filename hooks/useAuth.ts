@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
+import { useRouter } from "next/navigation";
 import type { User, Session } from "@supabase/supabase-js";
 import { getSupabaseClient } from "@/lib/supabase";
 
@@ -18,6 +19,7 @@ interface UseAuthReturn extends AuthState {
 }
 
 export function useAuth(): UseAuthReturn {
+  const router = useRouter();
   const [state, setState] = useState<AuthState>({
     user:    null,
     session: null,
@@ -53,6 +55,11 @@ export function useAuth(): UseAuthReturn {
           session: session ?? null,
           loading: false,
         });
+
+        // After OAuth callback lands on any page, push to dashboard
+        if (event === "SIGNED_IN" && session) {
+          router.push("/dashboard");
+        }
       }
     );
 
