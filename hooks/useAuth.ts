@@ -56,9 +56,10 @@ export function useAuth(): UseAuthReturn {
           loading: false,
         });
 
-        // After OAuth callback lands on any page, push to dashboard
+        // After OAuth callback, push to the page they signed in from
         if (event === "SIGNED_IN" && session) {
-          router.push("/dashboard");
+          const path = typeof window !== "undefined" ? window.location.pathname : "/";
+          router.push(path === "/" ? "/profile" : path);
         }
       }
     );
@@ -77,8 +78,10 @@ export function useAuth(): UseAuthReturn {
     const supabase = getSupabaseClient();
     setIsSigningIn(true);
     try {
+      const currentPath = typeof window !== "undefined" ? window.location.pathname : "/";
+      const destination = currentPath === "/" ? "/profile" : currentPath;
       const redirectTo = typeof window !== "undefined"
-        ? window.location.origin + "/dashboard"
+        ? window.location.origin + destination
         : undefined;
       const { error } = await supabase.auth.signInWithOAuth({
         provider: "google",
