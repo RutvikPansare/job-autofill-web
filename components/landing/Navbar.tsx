@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { useAuth } from "@/hooks/useAuth";
 
 const NAV_LINKS = [
@@ -24,7 +24,6 @@ const GOOGLE_ICON = (
 export default function Navbar() {
   const { user, loading, signInWithGoogle, signOut, isSigningIn, isSigningOut } = useAuth();
   const [mobileOpen, setMobileOpen] = useState(false);
-  const router = useRouter();
   const searchParams = useSearchParams();
   const autoAuthStartedRef = useRef(false);
 
@@ -47,14 +46,6 @@ export default function Navbar() {
       alert("Sign-in failed. Please try again.");
     });
   }, [searchParams, loading, user, isSigningIn, signInWithGoogle]);
-
-  // After OAuth callback lands on "/", detect session and redirect
-  useEffect(() => {
-    if (loading || !user) return;
-    const destination = sessionStorage.getItem("jf_auth_return") || "/profile";
-    sessionStorage.removeItem("jf_auth_return");
-    router.replace(destination);
-  }, [loading, user, router]);
 
   return (
     <nav className="fixed top-0 w-full z-50 bg-[#0b1326]/80 backdrop-blur-xl transition-all shadow-2xl shadow-indigo-900/20 font-['Inter'] antialiased border-b border-white/5">

@@ -48,29 +48,22 @@ export function useAuth(): UseAuthReturn {
           window.postMessage({ action: "JOBFILL_SET_SESSION", session }, "*");
         }
 
-        // Skip INITIAL_SESSION to avoid race where UI resets before session resolves
-        if (event === "INITIAL_SESSION") return;
         setState({
           user:    session?.user ?? null,
           session: session ?? null,
           loading: false,
         });
 
-        // After OAuth callback, go to the page saved before leaving for Google
-        if (event === "SIGNED_IN" && session) {
+        // SIGNED_IN fires when the listener is already active (e.g. sign-in on a
+        // protected page). INITIAL_SESSION fires when detectSessionInUrl processes
+        // the OAuth ?code= before the listener subscribes — both mean a fresh login.
+        if ((event === "SIGNED_IN" || event === "INITIAL_SESSION") && session) {
           const destination = sessionStorage.getItem("jf_auth_return") || "/profile";
           sessionStorage.removeItem("jf_auth_return");
           router.push(destination);
         }
       }
     );
-
-    // Initial sync
-    supabase.auth.getSession().then(({ data }) => {
-      if (typeof window !== "undefined" && data.session) {
-        window.postMessage({ action: "JOBFILL_SET_SESSION", session: data.session }, "*");
-      }
-    });
 
     return () => subscription.unsubscribe();
   }, []);
