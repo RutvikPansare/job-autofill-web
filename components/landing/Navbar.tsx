@@ -48,12 +48,13 @@ export default function Navbar() {
     });
   }, [searchParams, loading, user, isSigningIn, signInWithGoogle]);
 
+  // After OAuth callback lands on "/", detect session and redirect
   useEffect(() => {
-    const authCallback = searchParams.get("auth_callback");
-    const returnTo = searchParams.get("returnTo") || "/dashboard";
-    if (authCallback !== "1" || loading || !user) return;
-    router.replace(returnTo);
-  }, [searchParams, loading, user, router]);
+    if (loading || !user) return;
+    const destination = sessionStorage.getItem("jf_auth_return") || "/profile";
+    sessionStorage.removeItem("jf_auth_return");
+    router.replace(destination);
+  }, [loading, user, router]);
 
   return (
     <nav className="fixed top-0 w-full z-50 bg-[#0b1326]/80 backdrop-blur-xl transition-all shadow-2xl shadow-indigo-900/20 font-['Inter'] antialiased border-b border-white/5">
