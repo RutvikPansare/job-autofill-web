@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
-import { useRouter } from "next/navigation";
 import type { User, Session } from "@supabase/supabase-js";
 import { getSupabaseClient } from "@/lib/supabase";
 
@@ -19,7 +18,6 @@ interface UseAuthReturn extends AuthState {
 }
 
 export function useAuth(): UseAuthReturn {
-  const router = useRouter();
   const [state, setState] = useState<AuthState>({
     user:    null,
     session: null,
@@ -54,13 +52,16 @@ export function useAuth(): UseAuthReturn {
           loading: false,
         });
 
-        // SIGNED_IN fires when the listener is already active (e.g. sign-in on a
-        // protected page). INITIAL_SESSION fires when detectSessionInUrl processes
-        // the OAuth ?code= before the listener subscribes — both mean a fresh login.
-        if ((event === "SIGNED_IN" || event === "INITIAL_SESSION") && session) {
-          const destination = sessionStorage.getItem("jf_auth_return") || "/profile";
-          sessionStorage.removeItem("jf_auth_return");
-          router.push(destination);
+        // jf_auth_return is only written by signInWithGoogle, so its presence
+        // means we're landing back from an OAuth redirect. Use window.location
+        // rather than router.push — the Next.js router can silently drop pushes
+        // fired inside auth callbacks before hydration settles.
+        if (session) {
+          const destination = sessionStorage.getItem("jf_auth_return");
+          if (destination) {
+            sessionStorage.removeItem("jf_auth_return");
+            window.location.replace(destination);
+          }
         }
       }
     );
