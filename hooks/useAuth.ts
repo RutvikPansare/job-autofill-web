@@ -29,8 +29,12 @@ export function useAuth(): UseAuthReturn {
   useEffect(() => {
     const supabase = getSupabaseClient();
 
+    console.log("[useAuth] effect running — hash:", window.location.hash.slice(0, 40) || "(none)");
+    console.log("[useAuth] jf_auth_return in sessionStorage:", sessionStorage.getItem("jf_auth_return"));
+
     // Resolve initial session (also handles OAuth redirect token in URL hash)
     supabase.auth.getSession().then(({ data }) => {
+      console.log("[useAuth] getSession resolved — user:", data.session?.user?.email ?? "null");
       setState({
         user:    data.session?.user ?? null,
         session: data.session ?? null,
@@ -41,6 +45,8 @@ export function useAuth(): UseAuthReturn {
     // Subscribe to future auth changes
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       (event, session) => {
+        console.log("[useAuth] onAuthStateChange —", event, "| user:", session?.user?.email ?? "null");
+
         // Sync session to extension background for autofill logging
         if (typeof window !== "undefined") {
           window.postMessage({ action: "JOBFILL_SET_SESSION", session }, "*");
@@ -58,7 +64,9 @@ export function useAuth(): UseAuthReturn {
         // fired inside auth callbacks before hydration settles.
         if (session) {
           const destination = sessionStorage.getItem("jf_auth_return");
+          console.log("[useAuth] session present — jf_auth_return:", destination ?? "(not set)");
           if (destination) {
+            console.log("[useAuth] redirecting to:", destination);
             sessionStorage.removeItem("jf_auth_return");
             window.location.replace(destination);
           }
@@ -76,6 +84,7 @@ export function useAuth(): UseAuthReturn {
       // Save where to go after auth — sessionStorage survives the OAuth redirect
       const currentPath = typeof window !== "undefined" ? window.location.pathname : "/";
       const destination = currentPath === "/" ? "/profile" : currentPath;
+      console.log("[useAuth] signInWithGoogle — saving jf_auth_return:", destination);
       if (typeof window !== "undefined") {
         sessionStorage.setItem("jf_auth_return", destination);
       }
