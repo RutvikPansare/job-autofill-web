@@ -32,7 +32,7 @@ function Field({
       <input
         type={type}
         value={value}
-        onChange={(event) => updateField(field, event.target.value)}
+        onChange={(e) => updateField(field, e.target.value)}
         placeholder={placeholder}
         className={`w-full rounded-xl border bg-surface px-4 py-3 text-sm text-on-surface outline-none transition-all placeholder:text-outline ${
           error
@@ -45,13 +45,26 @@ function Field({
   );
 }
 
+function SectionDivider({ label }: { label: string }) {
+  return (
+    <div className="flex items-center gap-3 pt-2">
+      <span className="text-xs font-semibold uppercase tracking-widest text-on-surface-variant/60">
+        {label}
+      </span>
+      <div className="h-px flex-1 bg-outline-variant/20" />
+    </div>
+  );
+}
+
 export default function ProfileBasicsCard({ profile, validationErrors }: Props) {
-  const addSkill = useProfileStore((state) => state.addSkill);
-  const removeSkill = useProfileStore((state) => state.removeSkill);
+  const addSkill    = useProfileStore((s) => s.addSkill);
+  const removeSkill = useProfileStore((s) => s.removeSkill);
   const [draftSkill, setDraftSkill] = useState("");
 
   function submitSkill() {
-    addSkill(draftSkill);
+    const trimmed = draftSkill.trim();
+    if (!trimmed) return;
+    addSkill(trimmed);
     setDraftSkill("");
   }
 
@@ -59,182 +72,78 @@ export default function ProfileBasicsCard({ profile, validationErrors }: Props) 
     <ProfileSectionCard
       eyebrow="Profile"
       title="Core information"
-      description="Keep your autofill identity, location, online presence, and preference fields in one clean place."
+      description="Your identity, location, online presence, work preferences, and EEO fields — all in one place."
     >
       <div className="grid gap-6">
+
+        {/* ── Personal Information ─────────────────────────────────────── */}
+        <SectionDivider label="Personal Information" />
         <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-          <Field
-            label="Full Name"
-            field="full_name"
-            value={profile.full_name}
-            placeholder="Jane Doe"
-          />
-          <Field
-            label="First Name"
-            field="first_name"
-            value={profile.first_name}
-            placeholder="Jane"
-          />
-          <Field
-            label="Last Name"
-            field="last_name"
-            value={profile.last_name}
-            placeholder="Doe"
-          />
-          <Field
-            label="Email"
-            field="email"
-            type="email"
-            value={profile.email}
-            placeholder="jane@example.com"
-            error={validationErrors.email}
-          />
-          <Field
-            label="Phone"
-            field="phone"
-            value={profile.phone}
-            placeholder="(555) 123-4567"
-          />
-          <Field
-            label="Desired Salary"
-            field="desired_salary"
-            value={profile.desired_salary}
-            placeholder="$140,000"
-          />
+          <Field label="Full Name"  field="full_name"  value={profile.full_name}  placeholder="Jane Doe" />
+          <Field label="First Name" field="first_name" value={profile.first_name} placeholder="Jane" />
+          <Field label="Last Name"  field="last_name"  value={profile.last_name}  placeholder="Doe" />
+          <Field label="Email" field="email" type="email" value={profile.email} placeholder="jane@example.com" error={validationErrors.email} />
+          <Field label="Phone" field="phone" value={profile.phone} placeholder="(555) 123-4567" />
+          <Field label="Desired Salary" field="desired_salary" value={profile.desired_salary} placeholder="$140,000" />
         </div>
 
+        {/* ── Location ─────────────────────────────────────────────────── */}
+        <SectionDivider label="Location" />
         <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-5">
           <div className="xl:col-span-2">
-            <Field
-              label="Address"
-              field="address"
-              value={profile.address}
-              placeholder="123 Market Street"
-            />
+            <Field label="Address" field="address" value={profile.address} placeholder="123 Market Street" />
           </div>
-          <Field label="City" field="city" value={profile.city} placeholder="New York" />
-          <Field label="State" field="state" value={profile.state} placeholder="NY" />
-          <Field label="ZIP" field="zip" value={profile.zip} placeholder="10001" />
+          <Field label="City"    field="city"    value={profile.city}    placeholder="New York" />
+          <Field label="State"   field="state"   value={profile.state}   placeholder="NY" />
+          <Field label="ZIP"     field="zip"     value={profile.zip}     placeholder="10001" />
         </div>
-
-        <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-          <Field
-            label="Country"
-            field="country"
-            value={profile.country}
-            placeholder="United States"
-          />
-          <Field
-            label="LinkedIn"
-            field="linkedin"
-            value={profile.linkedin}
-            placeholder="https://linkedin.com/in/..."
-            error={validationErrors.linkedin}
-          />
-          <Field
-            label="GitHub"
-            field="github"
-            value={profile.github}
-            placeholder="https://github.com/..."
-            error={validationErrors.github}
-          />
-          <Field
-            label="Portfolio"
-            field="portfolio"
-            value={profile.portfolio}
-            placeholder="https://your-site.com"
-          />
-        </div>
-
         <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-          <Field
-            label="Work Authorization"
-            field="work_authorization"
-            value={profile.work_authorization}
-            placeholder="US Citizen / Visa / Sponsorship needed"
-          />
-          <Field
-            label="Visa Status"
-            field="visa_status"
-            value={profile.visa_status}
-            placeholder="H-1B"
-          />
-          <Field
-            label="Willing to Relocate"
-            field="willing_to_relocate"
-            value={profile.willing_to_relocate}
-            placeholder="Yes / No"
-          />
-          <Field
-            label="Engineering Focus"
-            field="engineering_focus"
-            value={profile.engineering_focus}
-            placeholder="Frontend, Full-stack, ML..."
-          />
-          <Field
-            label="Travel Preference"
-            field="travel_preference"
-            value={profile.travel_preference}
-            placeholder="Remote, hybrid, on-site"
-          />
+          <Field label="Country" field="country" value={profile.country} placeholder="United States" />
         </div>
 
+        {/* ── Online Presence ──────────────────────────────────────────── */}
+        <SectionDivider label="Online Presence" />
         <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-          <Field
-            label="Gender Identity"
-            field="gender_identity"
-            value={profile.gender_identity}
-            placeholder="Optional"
-          />
-          <Field
-            label="Pronouns"
-            field="pronoun"
-            value={profile.pronoun}
-            placeholder="She/Her"
-          />
-          <Field
-            label="Sexual Orientation"
-            field="sexual_orientation"
-            value={profile.sexual_orientation}
-            placeholder="Optional"
-          />
-          <Field
-            label="Race / Ethnicity"
-            field="race_ethnicity"
-            value={profile.race_ethnicity}
-            placeholder="Optional"
-          />
-          <Field
-            label="Hispanic / Latino"
-            field="hispanic_latino"
-            value={profile.hispanic_latino}
-            placeholder="Optional"
-          />
-          <Field
-            label="Veteran Status"
-            field="veteran_status"
-            value={profile.veteran_status}
-            placeholder="Optional"
-          />
-          <Field
-            label="Disability Status"
-            field="disability_status"
-            value={profile.disability_status}
-            placeholder="Optional"
-          />
+          <Field label="LinkedIn"  field="linkedin"  value={profile.linkedin}  placeholder="https://linkedin.com/in/..." error={validationErrors.linkedin} />
+          <Field label="GitHub"    field="github"    value={profile.github}    placeholder="https://github.com/..."    error={validationErrors.github} />
+          <Field label="Portfolio" field="portfolio" value={profile.portfolio} placeholder="https://your-site.com" />
         </div>
 
-        <div className="rounded-2xl border border-outline-variant/20 bg-surface p-4">
-          <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
-            <div>
-              <h3 className="text-base font-semibold text-on-surface">Skills</h3>
-              <p className="mt-1 text-sm text-on-surface-variant">
-                Add comma-free skill tags used by the extension autofill logic.
-              </p>
-            </div>
-            <div className="rounded-full bg-surface-container-high px-3 py-1 text-xs font-semibold text-on-surface-variant">
+        {/* ── Work Preferences ─────────────────────────────────────────── */}
+        <SectionDivider label="Work Preferences" />
+        <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+          <Field label="Work Authorization"  field="work_authorization"  value={profile.work_authorization}  placeholder="US Citizen / Visa / Sponsorship needed" />
+          <Field label="Visa Status"         field="visa_status"         value={profile.visa_status}         placeholder="H-1B" />
+          <Field label="Willing to Relocate" field="willing_to_relocate" value={profile.willing_to_relocate} placeholder="Yes / No" />
+          <Field label="Engineering Focus"   field="engineering_focus"   value={profile.engineering_focus}   placeholder="Frontend, Full-stack, ML…" />
+          <Field label="Travel Preference"   field="travel_preference"   value={profile.travel_preference}   placeholder="Remote, hybrid, on-site" />
+        </div>
+
+        {/* ── EEO ──────────────────────────────────────────────────────── */}
+        <SectionDivider label="Equal Employment Opportunity (EEO)" />
+        <p className="text-xs text-on-surface-variant/60 -mt-2">
+          These fields are optional and used only when an application explicitly asks for them.
+        </p>
+        <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+          <Field label="Gender Identity"    field="gender_identity"    value={profile.gender_identity}    placeholder="Optional" />
+          <Field label="Pronouns"           field="pronoun"            value={profile.pronoun}            placeholder="She/Her" />
+          <Field label="Sexual Orientation" field="sexual_orientation" value={profile.sexual_orientation} placeholder="Optional" />
+          <Field label="Race / Ethnicity"   field="race_ethnicity"     value={profile.race_ethnicity}     placeholder="Optional" />
+          <Field label="Hispanic / Latino"  field="hispanic_latino"    value={profile.hispanic_latino}    placeholder="Optional" />
+          <Field label="Veteran Status"     field="veteran_status"     value={profile.veteran_status}     placeholder="Optional" />
+          <Field label="Disability Status"  field="disability_status"  value={profile.disability_status}  placeholder="Optional" />
+        </div>
+
+        {/* ── Skills ───────────────────────────────────────────────────── */}
+        <SectionDivider label="Skills" />
+        <div className="rounded-2xl border border-outline-variant/20 bg-surface-container/30 p-4">
+          <div className="flex items-center justify-between">
+            <p className="text-sm text-on-surface-variant">
+              Skill tags used by the autofill engine to match application dropdowns.
+            </p>
+            <span className="rounded-full bg-surface-container-high px-3 py-1 text-xs font-semibold text-on-surface-variant">
               {profile.skills.length} saved
-            </div>
+            </span>
           </div>
 
           <div className="mt-4 flex flex-wrap gap-2">
@@ -243,30 +152,28 @@ export default function ProfileBasicsCard({ profile, validationErrors }: Props) 
                 key={skill}
                 type="button"
                 onClick={() => removeSkill(skill)}
-                className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/10 px-3 py-1.5 text-sm font-medium text-primary transition-all hover:bg-primary/15"
+                title={`Remove ${skill}`}
+                className="inline-flex items-center gap-1.5 rounded-full border border-primary/20 bg-primary/10 px-3 py-1 text-xs font-medium text-primary transition-all hover:border-red-300/40 hover:bg-red-50/10 hover:text-red-400"
               >
                 {skill}
-                <span className="material-symbols-outlined text-[16px]">close</span>
+                <span className="material-symbols-outlined text-[13px] leading-none">close</span>
               </button>
             ))}
-            {!profile.skills.length ? (
+            {!profile.skills.length && (
               <div className="rounded-xl border border-dashed border-outline-variant/30 px-4 py-3 text-sm text-on-surface-variant">
                 No skills yet. Add a few from your resume or application focus.
               </div>
-            ) : null}
+            )}
           </div>
 
           <div className="mt-4 flex flex-col gap-3 sm:flex-row">
             <input
               value={draftSkill}
-              onChange={(event) => setDraftSkill(event.target.value)}
-              onKeyDown={(event) => {
-                if (event.key === "Enter" || event.key === ",") {
-                  event.preventDefault();
-                  submitSkill();
-                }
+              onChange={(e) => setDraftSkill(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" || e.key === ",") { e.preventDefault(); submitSkill(); }
               }}
-              placeholder="Type a skill and press Enter"
+              placeholder="Type a skill and press Enter or comma"
               className="flex-1 rounded-xl border border-outline-variant/30 bg-surface-container px-4 py-3 text-sm text-on-surface outline-none transition-all placeholder:text-outline focus:border-primary/50 focus:ring-1 focus:ring-primary/20"
             />
             <button
@@ -279,6 +186,7 @@ export default function ProfileBasicsCard({ profile, validationErrors }: Props) 
             </button>
           </div>
         </div>
+
       </div>
     </ProfileSectionCard>
   );
