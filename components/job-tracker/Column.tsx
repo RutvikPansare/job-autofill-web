@@ -13,7 +13,7 @@ export default function Column({ column, jobs }: Props) {
   const { setNodeRef, isOver } = useDroppable({ id: column.id });
 
   return (
-    <div className="flex flex-col min-w-[280px] w-[280px] shrink-0">
+    <div className="flex flex-col flex-1 min-w-[220px]">
 
       {/* Column header */}
       <div className="flex items-center justify-between mb-3 px-1">
@@ -31,7 +31,7 @@ export default function Column({ column, jobs }: Props) {
       {/* Drop zone */}
       <div
         ref={setNodeRef}
-        className={`flex flex-col gap-3 flex-1 min-h-[200px] p-3 rounded-2xl border-2 transition-all duration-150
+        className={`flex flex-col gap-3 flex-1 min-h-[320px] p-3 rounded-2xl border-2 transition-all duration-150
           ${isOver
             ? "border-primary/60 bg-primary/5 shadow-inner shadow-primary/10"
             : "border-outline-variant/10 bg-surface-container-low/50"

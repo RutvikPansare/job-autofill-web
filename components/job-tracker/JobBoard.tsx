@@ -39,15 +39,19 @@ export default function JobBoard() {
 
   return (
     <DndContext sensors={sensors} onDragEnd={handleDragEnd}>
-      <div className="mx-auto flex max-w-screen-2xl gap-4 overflow-x-auto pb-4 px-8">
-        {COLUMNS.map((col) => (
-          <Column
-            key={col.id}
-            column={col}
-            jobs={jobsByStatus[col.id] ?? []}
-          />
-        ))}
-      </div>
+      <section className="px-8">
+        <div className="mx-auto max-w-screen-2xl">
+          <div className="flex gap-4 overflow-x-auto pb-4">
+            {COLUMNS.map((col) => (
+              <Column
+                key={col.id}
+                column={col}
+                jobs={jobsByStatus[col.id] ?? []}
+              />
+            ))}
+          </div>
+        </div>
+      </section>
     </DndContext>
   );
 }
