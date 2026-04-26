@@ -2,10 +2,10 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title:       "JobFill – Apply to Jobs 10x Faster",
-  description: "JobFill auto-fills your job applications in seconds. Just click, fill, apply — powered by AI.",
+  title:       "BoltApply – Apply to Jobs 10x Faster",
+  description: "BoltApply auto-fills your job applications in seconds. Just click, fill, apply — powered by AI.",
   openGraph: {
-    title:       "JobFill – Apply to Jobs 10x Faster",
+    title:       "BoltApply – Apply to Jobs 10x Faster",
     description: "Auto-fill job applications in seconds across Greenhouse, Lever, Workday, and 100+ ATS platforms.",
     type:        "website",
   },

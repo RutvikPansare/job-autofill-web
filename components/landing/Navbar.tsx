@@ -52,7 +52,7 @@ export default function Navbar() {
       <div className="flex justify-between items-center max-w-7xl mx-auto px-6 py-4">
 
         {/* Logo */}
-        <div className="text-2xl font-black tracking-tighter text-white">JobFill</div>
+        <div className="text-2xl font-black tracking-tighter text-white">BoltApply</div>
 
         {/* Desktop nav links */}
         <div className="hidden md:flex gap-8">

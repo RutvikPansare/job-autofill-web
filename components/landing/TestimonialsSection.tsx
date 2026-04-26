@@ -22,7 +22,7 @@ const TESTIMONIALS: Testimonial[] = [
     avatarClass: "bg-secondary-container/20 text-secondary-fixed-dim",
   },
   {
-    quote: "I love that all my data stays local on my machine. I was hesitant to use other autofillers because they require accounts, but JobFill respects privacy.",
+    quote: "I love that all my data stays local on my machine. I was hesitant to use other autofillers because they require accounts, but BoltApply respects privacy.",
     name:  "Michael K.",
     role:  "Data Scientist",
     initials: "MK",

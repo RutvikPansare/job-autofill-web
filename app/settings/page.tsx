@@ -64,7 +64,7 @@ export default function SettingsPage() {
                 /* Signed-out state */
                 <div>
                   <p className="mb-5 text-sm text-on-surface-variant">
-                    Sign in to sync your profile, access the job tracker, and use all JobFill features across devices.
+                    Sign in to sync your profile, access the job tracker, and use all BoltApply features across devices.
                   </p>
 
                   <button

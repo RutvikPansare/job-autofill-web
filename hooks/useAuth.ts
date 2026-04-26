@@ -100,7 +100,7 @@ export function useAuth(): UseAuthReturn {
       });
       if (error) throw error;
     } catch (err) {
-      console.error("[JobFill] Sign-in failed:", err);
+      console.error("[BoltApply] Sign-in failed:", err);
       setIsSigningIn(false);
       throw err;
     }
@@ -112,7 +112,7 @@ export function useAuth(): UseAuthReturn {
     try {
       await supabase.auth.signOut();
     } catch (err) {
-      console.error("[JobFill] Sign-out failed:", err);
+      console.error("[BoltApply] Sign-out failed:", err);
     } finally {
       setIsSigningOut(false);
     }

@@ -28,7 +28,7 @@ export default function ProfileHeader({
           <p className="mt-2 text-sm leading-6 text-on-surface-variant">
             This hosted page writes to the same Chrome storage keys the extension already
             uses, so resume parsing, autofill, and cover-letter data stay compatible
-            everywhere JobFill runs.
+            everywhere BoltApply runs.
           </p>
 
           <div className="mt-5 grid gap-4 sm:grid-cols-[minmax(0,1fr)_220px]">

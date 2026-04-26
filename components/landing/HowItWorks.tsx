@@ -12,7 +12,7 @@ const STEPS = [
   {
     number: "3",
     title:  "Click Autofill",
-    body:   "Click the extension icon and hit Autofill. Watch JobFill intelligently populate every field in seconds.",
+    body:   "Click the extension icon and hit Autofill. Watch BoltApply intelligently populate every field in seconds.",
   },
 ];
 
@@ -21,7 +21,7 @@ export default function HowItWorks() {
     <section id="how-it-works" className="py-24 bg-surface px-6">
       <div className="max-w-5xl mx-auto">
         <h2 className="text-3xl md:text-5xl font-bold text-white text-center mb-16 tracking-tight">
-          How JobFill Works
+          How BoltApply Works
         </h2>
 
         <div className="flex flex-col md:flex-row gap-12 relative">

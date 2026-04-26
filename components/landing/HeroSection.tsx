@@ -38,7 +38,7 @@ export default function HeroSection() {
           </h1>
 
           <p className="text-lg lg:text-xl text-on-surface-variant font-body leading-relaxed max-w-xl">
-            JobFill auto-fills your job applications in seconds. Just click, fill, apply — powered by AI.
+            BoltApply auto-fills your job applications in seconds. Just click, fill, apply — powered by AI.
             Experience the Ethereal Conduit.
           </p>
 

@@ -282,7 +282,7 @@ class ExtensionBridge {
     // Google Sheets — proxied via content-script postMessage bridge (webpage context)
     if (message.action === "JF_GOOGLE_SHEETS") {
       const ready = await this.waitForExtension();
-      if (!ready) return { success: false, error: "Extension not detected. Please ensure the JobFill extension is installed and enabled." };
+      if (!ready) return { success: false, error: "Extension not detected. Please ensure the BoltApply extension is installed and enabled." };
       const reqId = this.id();
       return new Promise((resolve) => {
         const timer = setTimeout(() => {

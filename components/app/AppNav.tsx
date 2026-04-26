@@ -21,7 +21,7 @@ export default function AppNav() {
             href="/"
             className="text-lg font-black tracking-tighter text-white transition-colors hover:text-primary"
           >
-            JobFill
+            BoltApply
           </Link>
           <span className="hidden text-outline-variant/50 sm:block">/</span>
           <span className="hidden text-sm font-medium text-on-surface-variant sm:block">

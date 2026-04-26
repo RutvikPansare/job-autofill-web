@@ -15,8 +15,8 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto px-8 grid grid-cols-1 md:grid-cols-2 lg:flex lg:justify-between items-start gap-12">
 
         <div className="flex flex-col">
-          <span className="text-xl font-bold text-white mb-4 block">JobFill</span>
-          <p className="text-slate-500 mt-2">© {new Date().getFullYear()} JobFill. Built on the Ethereal Conduit.</p>
+          <span className="text-xl font-bold text-white mb-4 block">BoltApply</span>
+          <p className="text-slate-500 mt-2">© {new Date().getFullYear()} BoltApply. Built on the Ethereal Conduit.</p>
         </div>
 
         <div className="flex flex-col gap-3">

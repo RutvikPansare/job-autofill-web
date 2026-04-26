@@ -8,7 +8,7 @@ export default function CTASection() {
           Ready to apply smarter?
         </h2>
         <p className="text-xl text-on-surface-variant mb-10 max-w-2xl mx-auto">
-          Stop wasting time copy-pasting your resume into forms. Let JobFill handle the tedious work so
+          Stop wasting time copy-pasting your resume into forms. Let BoltApply handle the tedious work so
           you can focus on interview prep.
         </p>
         <a
