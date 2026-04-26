@@ -323,7 +323,7 @@ export default function SheetsIntegration() {
 
   return (
     <section className="px-8">
-      <div className="rounded-2xl border border-outline-variant/20 bg-surface-container-low p-6">
+      <div className="mx-auto max-w-screen-2xl rounded-2xl border border-outline-variant/20 bg-surface-container-low p-6">
         <div className="flex items-start justify-between gap-4">
           <div>
             <div className="text-xs font-bold uppercase tracking-[0.18em] text-on-surface-variant/70">
