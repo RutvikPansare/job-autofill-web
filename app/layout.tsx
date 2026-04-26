@@ -4,10 +4,19 @@ import "./globals.css";
 export const metadata: Metadata = {
   title:       "BoltApply – Apply to Jobs 10x Faster",
   description: "BoltApply auto-fills your job applications in seconds. Just click, fill, apply — powered by AI.",
+  icons: {
+    icon:  [
+      { url: "/favicon.ico",  sizes: "16x16" },
+      { url: "/icon48.png",   sizes: "48x48" },
+      { url: "/icon128.png",  sizes: "128x128" },
+    ],
+    apple: "/icon128.png",
+  },
   openGraph: {
     title:       "BoltApply – Apply to Jobs 10x Faster",
     description: "Auto-fill job applications in seconds across Greenhouse, Lever, Workday, and 100+ ATS platforms.",
     type:        "website",
+    images:      [{ url: "/icon128.png" }],
   },
 };
 
