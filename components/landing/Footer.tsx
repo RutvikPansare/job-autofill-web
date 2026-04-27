@@ -1,5 +1,5 @@
 const LINKS_LEGAL = [
-  { label: "Privacy Policy",   href: "#" },
+  { label: "Privacy Policy",   href: "/privacy" },
   { label: "Terms of Service", href: "#" },
 ];
 
