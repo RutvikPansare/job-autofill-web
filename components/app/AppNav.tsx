@@ -22,6 +22,7 @@ export default function AppNav() {
             className="text-lg font-black tracking-tighter text-white transition-colors hover:text-primary"
           >
             BoltApply
+            <span className="text-[9px] font-bold tracking-widest bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 rounded px-1.5 py-0.5">BETA</span>
           </Link>
           <span className="hidden text-outline-variant/50 sm:block">/</span>
           <span className="hidden text-sm font-medium text-on-surface-variant sm:block">
